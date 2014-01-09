@@ -11,7 +11,7 @@ New Features
 * Publish setting
 * Real frontend filtering
 * Template selection in modules
-
+* Backend filtering
 
 Installation
 ------------
