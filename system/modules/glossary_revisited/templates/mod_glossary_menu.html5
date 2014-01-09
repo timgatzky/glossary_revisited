@@ -8,7 +8,11 @@
 
 <ul class="anchors links block">
 <?php foreach ($this->links as $id=>$item): ?>
-  <li><a href="<?php echo $item['href']; ?>"><?php echo $item['link']; ?></a></li>
+<?php if($item['active']):?>
+  <li><span class="active current"><?php echo $item['link']; ?></span></li>
+<?php else: ?> 
+  <li><a class="sibling" href="<?php echo $item['href']; ?>"><?php echo $item['link']; ?></a></li>
+<?php endif; ?>
 <?php endforeach; ?>
 </ul>
 

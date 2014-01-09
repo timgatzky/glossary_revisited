@@ -108,6 +108,11 @@ class ModuleGlossaryMenu extends \Module
 			{
 				$arrLinks[$key]['href'] = ampersand($this->Environment->request, true).'#'.$key;
 			}
+			
+			if(\Input::get('gl') == $key)
+			{
+				$arrLinks[$key]['active'] = 1;
+			}
 		}
 
 		$this->Template->request = ampersand($this->Environment->request, true);
