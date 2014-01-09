@@ -23,7 +23,8 @@ $this->loadLanguageFile('tl_content');
  */
 $this->loadDataContainer('tl_content');
 
-
+#	$GLOBALS['TL_DCA'][$dc->table]['list']['sorting']['filter'][] = array($this->userField.' IN(?)',$this->User->id);
+	
 
 /**
  * Table tl_glossary_term
@@ -58,9 +59,10 @@ $GLOBALS['TL_DCA']['tl_glossary_term'] = array
 		(
 			'mode'                    => 4,
 			'fields'                  => array('term'),
+			'flag'					  => 1,
 			'headerFields'            => array('title', 'tstamp'),
 			'panelLayout'             => 'filter;search,limit',
-			'child_record_callback'   => array('tl_glossary_term', 'listTerms')
+			'child_record_callback'   => array('Glossary\TableGlossaryTerm', 'listTerms'),
 		),
 		'global_operations' => array
 		(
@@ -86,12 +88,12 @@ $GLOBALS['TL_DCA']['tl_glossary_term'] = array
 				'href'                => 'act=paste&amp;mode=copy',
 				'icon'                => 'copy.gif'
 			),
-			'cut' => array
-			(
-				'label'               => &$GLOBALS['TL_LANG']['tl_glossary_term']['cut'],
-				'href'                => 'act=paste&amp;mode=cut',
-				'icon'                => 'cut.gif'
-			),
+			#'cut' => array
+			#(
+			#	'label'               => &$GLOBALS['TL_LANG']['tl_glossary_term']['cut'],
+			#	'href'                => 'act=paste&amp;mode=cut',
+			#	'icon'                => 'cut.gif'
+			#),
 			'toggle' => array
 			(
 				'label'               => &$GLOBALS['TL_LANG']['tl_glossary_term']['toggle'],
@@ -155,9 +157,16 @@ $GLOBALS['TL_DCA']['tl_glossary_term'] = array
 			'eval'                    => array('mandatory'=>true, 'maxlength'=>255, 'tl_class'=>'w50'),
 			'save_callback' => array
 			(
-				array('tl_glossary_term', 'capitalizeTerm')
+				array('Glossary\TableGlossaryTerm', 'capitalizeTerm'),
+				array('Glossary\TableGlossaryTerm', 'saveShortTerm')
 			),
 			'sql'                     => "varchar(64) NOT NULL default ''"
+		),
+		'short_term' => array
+		(
+			'label'                   => &$GLOBALS['TL_LANG']['tl_glossary_term']['term'],
+			'filter'				  => true,
+			'sql'                     => "varchar(8) NOT NULL default ''"
 		),
 		'author' => array
 		(
@@ -321,58 +330,3 @@ $GLOBALS['TL_DCA']['tl_glossary_term'] = array
 		),
 	)
 );
-
-
-/**
- * Class tl_glossary_term
- *
- * Provide miscellaneous methods that are used by the data configuration array.
- * @copyright  Leo Feyer 2008-2011
- * @author     Leo Feyer <http://www.contao.org>
- * @package    Controller
- */
-class tl_glossary_term extends Backend
-{
-
-	/**
-	 * Capitalize a term
-	 * @param string
-	 * @return string
-	 */
-	public function capitalizeTerm($term)
-	{
-		$first = utf8_substr($term, 0, 1);
-		$upper = utf8_strtoupper($first);
-
-		return $upper . utf8_substr($term, 1);
-	}
-
-
-	/**
-	 * List all terms
-	 * @param array
-	 * @return string
-	 */
-	public function listTerms($arrRow)
-	{
-		return '
-<div class="cte_type">' . $arrRow['term'] . '</div>
-<div class="limit_height' . (!$GLOBALS['TL_CONFIG']['doNotCollapse'] ? ' h32' : '') . ' block">
-' . $arrRow['definition'] . '
-</div>' . "\n";
-	}
-
-
-	/**
-	 * Return the link picker wizard
-	 * @param object
-	 * @return string
-	 */
-	public function pagePicker(DataContainer $dc)
-	{
-		$strField = 'ctrl_' . $dc->field . (($this->Input->get('act') == 'editAll') ? '_' . $dc->id : '');
-		return ' ' . $this->generateImage('pickpage.gif', $GLOBALS['TL_LANG']['MSC']['pagepicker'], 'style="vertical-align:top; cursor:pointer;" onclick="Backend.pickPage(\'' . $strField . '\')"');
-	}
-}
-
-?>

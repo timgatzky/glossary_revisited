@@ -125,5 +125,65 @@ class TableGlossaryTerm extends \Backend
 			$GLOBALS['TL_DCA'][$objDC->table]['subpalettes']['addImage'] = 'multiSRC,sortBy,size,imagemargin,fullsize';
 		}
 	}
+	
+	/**
+	 * Save the first letter of the term for further filtering
+	 * @param string
+	 * @param object
+	 * @return string
+	 */
+	public function saveShortTerm($varValue, \DataContainer $objDC)
+	{
+		\Database::getInstance()->prepare("UPDATE ".$objDC->table." %s WHERE id=?")->set(array('short_term'=>substr($varValue,0,1)))->execute($objDC->id);
+		return $varValue;
+	}
+	
+	/**
+	 * Class tl_glossary_term
+	 *
+	 * Provide miscellaneous methods that are used by the data configuration array.
+	 * @copyright  Leo Feyer 2008-2011
+	 * @author     Leo Feyer <http://www.contao.org>
+	 * @package    Controller
+	 */
+	
+	/**
+	 * Capitalize a term
+	 * @param string
+	 * @return string
+	 */
+	public function capitalizeTerm($term)
+	{
+		$first = utf8_substr($term, 0, 1);
+		$upper = utf8_strtoupper($first);
+
+		return $upper . utf8_substr($term, 1);
+	}
+
+	/**
+	 * List all terms
+	 * @param array
+	 * @return string
+	 */
+	public function listTerms($arrRow)
+	{
+		return '
+<div class="cte_type">' . $arrRow['term'] . '</div>
+<div class="limit_height' . (!$GLOBALS['TL_CONFIG']['doNotCollapse'] ? ' h32' : '') . ' block">
+' . $arrRow['definition'] . '
+</div>' . "\n";
+	}
+
+
+	/**
+	 * Return the link picker wizard
+	 * @param object
+	 * @return string
+	 */
+	public function pagePicker(DataContainer $dc)
+	{
+		$strField = 'ctrl_' . $dc->field . (($this->Input->get('act') == 'editAll') ? '_' . $dc->id : '');
+		return ' ' . $this->generateImage('pickpage.gif', $GLOBALS['TL_LANG']['MSC']['pagepicker'], 'style="vertical-align:top; cursor:pointer;" onclick="Backend.pickPage(\'' . $strField . '\')"');
+	}
 
 }
