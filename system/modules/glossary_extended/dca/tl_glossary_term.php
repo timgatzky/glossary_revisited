@@ -21,10 +21,7 @@ $this->loadLanguageFile('tl_content');
 /**
  * Load DataContainer
  */
-$this->loadDataContainer('tl_content');
-
-#	$GLOBALS['TL_DCA'][$dc->table]['list']['sorting']['filter'][] = array($this->userField.' IN(?)',$this->User->id);
-	
+$this->loadDataContainer('tl_content');	
 
 /**
  * Table tl_glossary_term
