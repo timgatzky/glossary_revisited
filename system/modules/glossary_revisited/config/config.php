@@ -18,7 +18,7 @@
 $GLOBALS['BE_MOD']['content']['glossary'] = array
 (
 	'tables' => array('tl_glossary', 'tl_glossary_term'),
-	'icon'   => 'system/modules/glossary_extended/assets/img/icon.gif'
+	'icon'   => 'system/modules/glossary_revisited/assets/img/icon.gif'
 );
 
 
