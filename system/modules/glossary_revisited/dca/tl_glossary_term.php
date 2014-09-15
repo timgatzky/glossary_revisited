@@ -267,7 +267,7 @@ $GLOBALS['TL_DCA']['tl_glossary_term'] = array
 			'eval'                    => array('rgxp'=>'url', 'decodeEntities'=>true, 'maxlength'=>255, 'tl_class'=>'w50 wizard'),
 			'wizard' => array
 			(
-				array('tl_glossary_term', 'pagePicker')
+				array('Glossary\TableGlossaryTerm', 'pagePicker')
 			),
 			'sql'                     => "varchar(255) NOT NULL default ''"
 		),
