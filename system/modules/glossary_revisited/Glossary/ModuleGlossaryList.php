@@ -158,6 +158,9 @@ class ModuleGlossaryList extends \Module
 			{
 				$this->addEnclosuresToTemplate($objTemplate, $objTerm->row());
 			}
+			
+			$objTemplate->row = $objTerm->row();
+			
 			$arrTerms[$key][] = $objTemplate;
 		}
 
