@@ -70,6 +70,11 @@ class ModuleGlossaryMenu extends \Module
 			return '';
 		}
 		
+		if($this->objModel->navigationTpl != $this->strTemplate)
+		{
+			$this->strTemplate = $this->objModel->navigationTpl;
+		}
+		
 		$this->objResult = $objTerm;
 		
 		return parent::generate();

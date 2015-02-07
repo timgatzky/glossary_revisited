@@ -53,6 +53,11 @@ class ModuleGlossaryList extends \Module
 		{
 			return '';
 		}
+		
+		if($this->objModel->navigationTpl != $this->strTemplate)
+		{
+			$this->strTemplate = $this->objModel->navigationTpl;
+		}
 
 		return parent::generate();
 	}
