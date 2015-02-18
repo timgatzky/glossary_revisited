@@ -27,6 +27,7 @@ ClassLoader::addClasses(array
 	'Glossary\ModuleGlossaryList' 	=> 'system/modules/glossary_revisited/Glossary/ModuleGlossaryList.php',
 	'Glossary\TableGlossaryTerm' 	=> 'system/modules/glossary_revisited/Glossary/TableGlossaryTerm.php',
 	'Glossary\TableModule' 			=> 'system/modules/glossary_revisited/Glossary/TableModule.php',
+	'Glossary\ModelTerm' 			=> 'system/modules/glossary_revisited/Glossary/ModelTerm.php',
 ));
 
 

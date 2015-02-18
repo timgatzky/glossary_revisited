@@ -204,10 +204,7 @@ $GLOBALS['TL_DCA']['tl_glossary_term'] = array
 			'inputType'               => 'fileTree',
 			'eval'                    => array('multiple'=>true, 'fieldType'=>'checkbox', 'orderField'=>'orderSRC', 'files'=>true, 'mandatory'=>true,'isGallery'=>true),
 			'sql'                     => "blob NULL",
-			'load_callback' => array
-			(
-				array('tl_content', 'setFileTreeFlags')
-			)
+			
 		),
 		'orderSRC' => array
 		(
@@ -324,3 +321,10 @@ $GLOBALS['TL_DCA']['tl_glossary_term'] = array
 		),
 	)
 );
+
+
+// Backward compatibility
+if(version_compare(VERSION, '3.4','<'))
+{
+	$GLOBALS['TL_DCA']['tl_glossary_term']['fields']['multiSRC']['load_callback'] = array(array('tl_content', 'setFileTreeFlags'));
+}
