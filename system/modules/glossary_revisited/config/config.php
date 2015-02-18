@@ -33,3 +33,9 @@ array_insert($GLOBALS['FE_MOD'], 4, array
 		'glossaryList' => 'Glossary\ModuleGlossaryList'
 	)
 ));
+
+
+/**
+ * Register the model classes 
+ */
+$GLOBALS['TL_MODELS']['tl_glossary_term'] = 'Glossary\ModelTerm';
