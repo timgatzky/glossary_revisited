@@ -164,6 +164,16 @@ class ModuleGlossaryList extends \Module
 			$arrTerms[$key][] = $objTemplate;
 		}
 
+		// HOOK modify terms
+		if (isset($GLOBALS['TL_HOOKS']['getGlossaryTerms']) && count($GLOBALS['TL_HOOKS']['getGlossaryTerms']) > 0)
+		{
+			foreach($GLOBALS['TL_HOOKS']['getGlossaryTerms'] as $callback)
+			{
+				$this->import($callback[0]);
+				$arrTerms = $this->$callback[0]->$callback[1]($arrTerms,$this);
+			}
+		}
+
 		$this->Template->terms = $arrTerms;
 		
 		$this->Template->request = ampersand($this->Environment->request, true);
