@@ -119,6 +119,17 @@ class ModuleGlossaryMenu extends \Module
 				$arrLinks[$key]['active'] = 1;
 			}
 		}
+		
+		// HOOK modify links
+		if (isset($GLOBALS['TL_HOOKS']['getGlossaryLinks']) && count($GLOBALS['TL_HOOKS']['getGlossaryLinks']) > 0)
+		{
+			foreach($GLOBALS['TL_HOOKS']['getGlossaryLinks'] as $callback)
+			{
+				$this->import($callback[0]);
+				$arrLinks = $this->$callback[0]->$callback[1]($arrLinks,$this);
+			}
+		}
+		
 
 		$this->Template->request = ampersand($this->Environment->request, true);
 		$this->Template->anchors = $arrAnchor;
