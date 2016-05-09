@@ -88,7 +88,17 @@ class ModuleGlossaryList extends \Module
 		}
 
 		global $objPage;
-		$this->import('String');
+		
+		// use contao StringUtil class
+		if(class_exists('Contao\StringUtil'))
+		{
+			$this->import('StringUtil','String');
+		}
+		else
+		{
+			$this->import('String');
+		}
+		
 		$arrTerms = array();
 
 		while ($objTerm->next())
