@@ -98,7 +98,9 @@ class ModuleGlossaryMenu extends \Module
 
 		while ($objTerm->next())
 		{
-			$link = utf8_substr($objTerm->term, 0, 1);
+			$term = $this->replaceInsertTags($objTerm->term);
+			
+			$link = utf8_substr($term, 0, 1);
 			$key = 'gl' . utf8_romanize($link);
 			
 			$arrAnchor[$key] = $link;

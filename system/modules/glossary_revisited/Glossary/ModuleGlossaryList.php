@@ -93,12 +93,13 @@ class ModuleGlossaryList extends \Module
 
 		while ($objTerm->next())
 		{
+			$term = $this->replaceInsertTags($objTerm->term);
 			$objTemplate = new \FrontendTemplate($this->strTemplate);
-			$key = utf8_substr($objTerm->term, 0, 1);
-
-			$objTemplate->term = $objTerm->term;
+			$key = utf8_substr($term, 0, 1);
+			
+			$objTemplate->term = $term;
 			$objTemplate->anchor = 'gl' . utf8_romanize($key);
-			$objTemplate->id = standardize($objTerm->term);
+			$objTemplate->id = standardize($term);
 
 			// Clean the RTE output
 			if ($objPage->outputFormat == 'xhtml')
@@ -111,6 +112,7 @@ class ModuleGlossaryList extends \Module
 			}
 
 			$objTemplate->definition = $this->String->encodeEmail($objTerm->definition);
+			$objTemplate->definition = $this->replaceInsertTags($objTemplate->definition);
 			$objTemplate->addImage = false;
 			$objTemplate->addGallery = false;
 			
